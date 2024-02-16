@@ -9,7 +9,7 @@ async function page({ params }) {
 
     return (
         <>
-            {datos.map(item => {
+            {datos.forEach(item => {
                 return (
                     <>
                         <div className="m-2">
@@ -86,7 +86,7 @@ async function page({ params }) {
                                 <div className="w-[45%] text-center">
                                     <h2 className="font-bold">Características importantes</h2>
                                 </div>
-                                {item.caract_import.map(item2 => {
+                                {item.caract_import.forEach(item2 => {
                                     return (
                                         <li>{item2}</li>
                                     );
@@ -124,7 +124,7 @@ async function page({ params }) {
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">{item.info_basica[0].color}</td>
                                             <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Fuentes de Alimentacion de Energia</th>
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                                {item.info_basica[0].fuente.map(item3 => {
+                                                {item.info_basica[0].fuente.forEach(item3 => {
                                                     return (
                                                         <p>{item3}</p>
                                                     );
@@ -216,7 +216,7 @@ async function page({ params }) {
                                         <tr>
                                             <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tipos de Puertos Entradas y Salidas</th>
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                                {item.conectividad[0].puertos_e_i.map(item4 => {
+                                                {item.conectividad[0].puertos_e_i.forEach(item4 => {
                                                     return (
                                                         <p>{item4}</p>
                                                     );
@@ -251,7 +251,7 @@ async function page({ params }) {
                                         <tr>
                                             <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Opciones de Conectividad</th>
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                                {item.caract_tecnica[0].opciones_conect.map(item5 => {
+                                                {item.caract_tecnica[0].opciones_conect.forEach(item5 => {
                                                     return (
                                                         <p>{item5}</p>
                                                     );
@@ -274,7 +274,7 @@ async function page({ params }) {
                                         <tr>
                                             <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas del Teclado</th>
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                                {item.caract_fisica[0].caract_teclado.map(item6 => {
+                                                {item.caract_fisica[0].caract_teclado.forEach(item6 => {
                                                     return (
                                                         <p>{item6}</p>
                                                     );
@@ -305,7 +305,7 @@ async function page({ params }) {
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">{item.detalles_productos[0].nivel_uso}</td>
                                             <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas Especiales</th>
                                             <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                                {item.detalles_productos[0].caract_especiales.map(item7 => {
+                                                {item.detalles_productos[0].caract_especiales.forEach(item7 => {
                                                     return (
                                                         <p>{item7}</p>
                                                     );
@@ -352,7 +352,7 @@ async function page({ params }) {
                     <h1 className="font-bold text-xl">Opiniones de clientes</h1>
                 </div>
 
-                {opiniones[0].lista_opiniones.map(opi => {
+                {opiniones[0].lista_opiniones.forEach(opi => {
                     return (
                         <div className="m-3 p-3 shadow-2xl rounded-xl bg-slate-100">
                             <h1 className="text-black"><strong>{opi.fecha} </strong> Publicado por <strong>{opi.autor}</strong></h1>

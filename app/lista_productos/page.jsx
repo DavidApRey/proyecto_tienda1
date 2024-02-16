@@ -3,18 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetch_lista_productos } from "../lib/data";
+import Image from "next/image";
 
 const datos = fetch_lista_productos();
 
-function page() {
+function Page() {
 
     const [marca, setMarca] = useState('');
     const [procesador, setProcesador] = useState('');
     const [dataFilter, setDataFilter] = useState(datos)
-
-    useEffect(() => {
-        aplicarFiltro();
-    }, []);
 
     const aplicarFiltro = () => {
 
@@ -34,6 +31,11 @@ function page() {
             setDataFilter(data_filter);
         }
     }
+
+    useEffect(() => {
+        aplicarFiltro();
+    }, []);
+
 
     return (
         <>
@@ -75,7 +77,8 @@ function page() {
                                 md:w-[20vw]
                                 lg:w-[25vw]
                                 m-2">
-                                <img
+                                <Image
+                                    alt="Producto Muestra"
                                     className="rounded-xl"
                                     src={item.ruta_imagen}
                                 />
@@ -131,4 +134,4 @@ function page() {
 
 }
 
-export default page
+export default Page
