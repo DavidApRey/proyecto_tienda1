@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Hola, Soy David Santiago Rey Pulido, soy estudiante de 2024 1-DESARROLLO DE SOFTWARE WEB BACK-END-2310-6A MOM 1 VIRTUAL
 
-## Getting Started
+## ¿Como iniciar el proyecto?
 
-First, run the development server:
+Para poder iniciar el sistema se pueden correr los siguientes comandos dependiendo del manejador de paquetes:
 
 ```bash
 npm run dev
