@@ -7,16 +7,40 @@ export function fetch_lista_productos() {
             codigo_equipo: '4711387326398',
             marca: 'ASUS',
             caract_import: [
-                'Incluye Maletín y Mouse alámbrico',
-                'Escudo de privacidad de la cámara web física',
-                'Inicio de sesión seguro con sensor de huellas dactilares',
-                'Bajas emisiones de luz azul certificado por TÜV Rheinland',
-                'Certificado de grado militar MIL-STD-810H'
+                {
+                    id: 1,
+                    datos: 'Incluye Maletín y Mouse alámbrico',
+                },
+                {
+                    id: 2,
+                    datos: 'Escudo de privacidad de la cámara web física',
+                },
+                {
+                    id: 3,
+                    datos: 'Inicio de sesión seguro con sensor de huellas dactilares',
+                },
+                {
+                    id: 4,
+                    datos: 'Bajas emisiones de luz azul certificado por TÜV Rheinland',
+                },
+                {
+                    id: 5,
+                    datos: 'Certificado de grado militar MIL-STD-810H'
+                }
             ],
             sinopsis: 'La ASUS Vivobook Go 15 es liviana, es compacta, diseñada para que seas productivo y te mantengas entretenido donde quiera que vayas. Con su bisagra plana de 180°, el protector físico de la cámara web y un montón de características de diseño bien pensadas, incluida una hermosa pantalla con bordes ultradelgados, ¡Vivobook Go 15 es un portátil que te permite hacer todo! ¡Llévala ya!',
             info_basica: [{
                 color: 'Negro mezclado',
-                fuente: ['Batería Recargable Interna', 'Energía Eléctrica'],
+                fuente: [
+                    {
+                        id: 1,
+                        datos: 'Batería Recargable Interna',
+                    },
+                    {
+                        id: 2,
+                        datos: 'Energía Eléctrica'
+                    }
+                ],
                 modelo: 'E1504FA-NJ843W'
             }],
             almacen_procesa: [{
@@ -38,11 +62,26 @@ export function fetch_lista_productos() {
             }],
             conectividad: [{
                 puertos_e_i: [
-                    'Puerto HDMI',
-                    'Puerto USB 2.0',
-                    'Puerto USB 3.2',
-                    'Puerto USB Tipo C',
-                    'Salida de Audífonos'
+                    {
+                        id: 1,
+                        datos: 'Puerto HDMI'
+                    },
+                    {
+                        id: 2,
+                        datos: 'Puerto USB 2.0'
+                    },
+                    {
+                        id: 3,
+                        datos: 'Puerto USB 3.2',
+                    },
+                    {
+                        id: 4,
+                        datos: 'Puerto USB Tipo C',
+                    },
+                    {
+                        id: 5,
+                        datos: 'Salida de Audífonos'
+                    }
                 ],
                 puertos_usb: '2 Puertos',
                 puerto_hdmi: '1 Puertos',
@@ -51,9 +90,18 @@ export function fetch_lista_productos() {
             }],
             caract_tecnica: [{
                 opciones_conect: [
-                    'Bluetooth',
-                    'USB',
-                    'WiFi'
+                    {
+                        id: 1,
+                        datos: 'Bluetooth',
+                    },
+                    {
+                        id: 2,
+                        datos: 'USB', 
+                    },
+                    {
+                        id: 3,
+                        datos: 'WiFi'
+                    }
                 ],
                 duracion_bateria: '8 Horas Aproximadas'
             }],

@@ -13,6 +13,10 @@ function Page() {
     const [procesador, setProcesador] = useState('');
     const [dataFilter, setDataFilter] = useState(datos)
 
+    useEffect(() => {
+        aplicarFiltro();
+    }, []);
+    
     const aplicarFiltro = () => {
 
         let data_filter;
@@ -31,11 +35,6 @@ function Page() {
             setDataFilter(data_filter);
         }
     }
-
-    useEffect(() => {
-        aplicarFiltro();
-    }, []);
-
 
     return (
         <>
@@ -76,10 +75,15 @@ function Page() {
                                 xm:w-[20vw]
                                 md:w-[20vw]
                                 lg:w-[25vw]
-                                m-2">
+                                m-2
+                                flex
+                                justify-center
+                                ">
                                 <Image
                                     alt="Producto Muestra"
                                     className="rounded-xl"
+                                    width="270"
+                                    height="270"
                                     src={item.ruta_imagen}
                                 />
                             </div>
@@ -89,10 +93,11 @@ function Page() {
 
                                 <div className="flex flex-row">
                                     <div className="text-black rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">{item.marca}</div>
-                                    <div className="text-black text-center w-[7rem] rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">Envio Gratis</div>                                </div>
+                                    <div className="text-black text-center w-[7rem] rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">Envio Gratis</div>
+                                </div>
 
                                 <div>
-                                    <h1 className="text-black text-xl font-bold">{item.nombre_producto}</h1>
+                                    <h1 className="text-black text-md font-bold">{item.nombre_producto}</h1>
                                 </div>
 
                                 <br />
@@ -118,9 +123,9 @@ function Page() {
 
                                 <br />
 
-                                <div className="m-1">
+                                <div className="">
                                     <p className="text-red-600">Precio</p>
-                                    <h1 className="text-red-600 font-medium text-3xl">${item.precio} Hoy</h1>
+                                    <h1 className="text-red-600 font-medium text-xl">${item.precio} Hoy</h1>
                                 </div>
                             </div>
                         </div>
