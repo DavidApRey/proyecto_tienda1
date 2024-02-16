@@ -1,41 +1,38 @@
 'use client'
 
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { fetch_lista_productos } from "../lib/data"
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { fetch_lista_productos } from "../lib/data";
 
 const datos = fetch_lista_productos();
 
 function page() {
 
-    const [Marca, setMarca] = useState('');
-    const [Procesador, setProcesador] = useState('');
+    const [marca, setMarca] = useState('');
+    const [procesador, setProcesador] = useState('');
     const [dataFilter, setDataFilter] = useState(datos)
 
     useEffect(() => {
         aplicarFiltro();
     }, []);
 
-
     const aplicarFiltro = () => {
 
         let data_filter;
 
-        if (Marca == '' && Procesador == '') {
+        if (marca == '' && procesador == '') {
             data_filter = datos;
             setDataFilter(data_filter);
-        } else if (Marca != '' && Procesador == '') {
-            data_filter = datos.filter(item => item.marca == Marca);
+        } else if (marca != '' && procesador == '') {
+            data_filter = datos.filter(item => item.marca == marca);
             setDataFilter(data_filter);
-        } else if (Marca == '' && Procesador != '') {
-            data_filter = datos.filter(item => item.procesador == Procesador);
+        } else if (marca == '' && procesador != '') {
+            data_filter = datos.filter(item => item.procesador == procesador);
             setDataFilter(data_filter);
-        } else if (Marca != '' && Procesador != '') {
-            data_filter = datos.filter(item => item.procesador == Procesador && item.marca == Marca);
+        } else if (marca != '' && procesador != '') {
+            data_filter = datos.filter(item => item.procesador == procesador && item.marca == marca);
             setDataFilter(data_filter);
         }
-
-        console.log(data_filter)
     }
 
     return (

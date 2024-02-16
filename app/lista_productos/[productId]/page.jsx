@@ -82,7 +82,7 @@ async function page({ params }) {
 
                         <div className="flex md:flex-row sm:flex-col xs:flex-col bg-slate-400 shadow-2xl rounded-lg">
 
-                            <div className="basis-1/2 md:w-[50%] sm:w-[97%] xs:w-[97%] m-4" >
+                            <div className="basis-1/2 md:w-[50%] sm:w-[97%] xs:w-[97%] m-4">
                                 <div className="w-[45%] text-center">
                                     <h2 className="font-bold">Características importantes</h2>
                                 </div>
