@@ -1,9 +1,11 @@
-import { fetch_opiniones_by_id, fetch_producto_by_id } from "@/app/lib/data";
+import { fetch_opiniones_by_id, fetch_producto_by_id, pruebas } from "@/app/lib/data";
 
 async function page({ params }) {
 
     const datos = await fetch_producto_by_id(params.productId);
     const opiniones = await fetch_opiniones_by_id(params.productId);
+
+    const pruebas_res = await pruebas();
 
     let nombre_producto = datos[0].nombre_producto;
     let codigo_equipo = datos[0].codigo_equipo;
@@ -12,6 +14,7 @@ async function page({ params }) {
 
     return (
         <>
+
             <div className="m-2">
                 <h1 className="text-black xs:w-[30vw] md:w-[50vw] lg:w-[70vw] text-xl font-bold">{nombre_producto}</h1>
                 <p className="text-gray-500 text-sm">Código: {codigo_equipo}</p>
@@ -21,7 +24,8 @@ async function page({ params }) {
                     <div className="text-black text-sm text-center m-1 w-[11rem] rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400">Compra y gana premios</div>
                 </div>
             </div>
-            <div className="flex md:flex-row sm:flex-col xs:flex-col">
+
+            <div className="flex justify-center align-middle md:flex-row sm:flex-col xs:flex-col">
 
                 <div className="basic-1/2 m-2 xs:w-[20vw] xm:w-[20vw] md:w-[20vw] lg:w-[25vw]">
                     <img className="rounded-xl" src={ruta_imagen} alt="" />
@@ -75,300 +79,175 @@ async function page({ params }) {
                             <button className="md:w-[23vw] sm:w-[18vw] bg-red-600 text-white font-bold p-3 rounded-lg">Agregar al Carrito</button>
                         </div>
                     </div>
+                    <div className="flex md:flex-row sm:flex-col xs:flex-col bg-slate-400 shadow-2xl rounded-lg my-4 justify-center">
+
+                        <div className="m-4">
+                            <div className="text-center">
+                                <h2 className="font-bold">Sobre este producto</h2>
+                            </div>
+
+                            <p>{sinopsis}</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            <br />
 
+            <div className="flex flex-row">
+                {/* Especificaciones Tecnicas */}
+                <div className="bg-slate-500 shadow-2xl rounded-lg p-2 m-4 w-[50%]">
 
-            <div className="flex md:flex-row sm:flex-col xs:flex-col bg-slate-400 shadow-2xl rounded-lg">
-
-                <div className="basis-1/2 md:w-[50%] sm:w-[97%] xs:w-[97%] m-4">
-                    <div className="w-[45%] text-center">
-                        <h2 className="font-bold">Características importantes</h2>
+                    <div className="mx-6">
+                        <h1 className="font-bold text-xl text-center">Especificaciones técnicas</h1>
                     </div>
-                    {datos[0].caract_import.map(item2 => {
+
+                    <div className="mx-4">
+                        <h2 className="font-bold text-md">Informacion Basica</h2>
+                    </div>
+
+                    <div className="m-3">
+                        <table className="border-collapse border border-slate-500">
+                            <tbody>
+                                <tr>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tonalidad de Color</th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_basica[0].color}</td>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Linea Modelo Referencia</th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_basica[0].modelo}</td>
+                                </tr>
+                                <tr>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas Especiales</th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">
+                                        {datos[0].detalles_productos[0].caract_especiales.map(item7 => {
+                                            return (
+                                                <p key={item7.id}>{item7.datos}</p>
+                                            );
+                                        })}
+                                    </td>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="mx-4">
+                        <h2 className="font-bold text-md">Almacenamiento y Procesamiento</h2>
+                    </div>
+
+                    <div>
+                        <div className="m-3">
+                            <table className="border-collapse border border-slate-500">
+                                <tbody>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Memoria RAM</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].memoria_ram}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Capacidad de Disco</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].capacidad_disco}</td>
+                                    </tr>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tipos de Discos que Incluye</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].incluye_disco}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Sistema Operativo</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].sistema_operativo}</td>
+                                    </tr>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Version Sistema Operativo</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].ver_sistema_operativo}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Procesador</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].procesador}</td>
+                                    </tr>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Velocidad del Procesador</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].velocidad_procesa}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Nucleos del Procesador</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].nucleo_procesa}</td>
+                                    </tr>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca del Procesador</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_procesa}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Modelo del Procesador</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].modelo_procesa}</td>
+                                    </tr>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca Tarjeta de Video/Grafica</th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_tarjeta_video}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="mx-4">
+                            <h2 className="font-bold text-md">Imagen y Pantalla</h2>
+                        </div>
+
+                        <div className="m-3">
+                            <table className="border-collapse border border-slate-500">
+                                <tbody>
+                                    <tr>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[9vw] text-left">Tamaño Pantalla</th>
+                                        <td className="p-2 border border-slate-800 w-[9vw] text-left">{datos[0].imagen_pantalla[0].tamaño_pantalla}</td>
+                                        <th className="p-2 border border-slate-800 bg-slate-600 text-left">Resolucion Pantalla</th>
+                                        <td className="p-2 border border-slate-800 text-left">{datos[0].imagen_pantalla[0].resolucion_pantalla}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="mx-4">
+                            <h2 className="font-bold text-md">Información Adicional Relevante</h2>
+                        </div>
+                    </div>
+
+                    <div className="m-3">
+                        <table className="border-collapse border border-slate-800">
+                            <tbody>
+                                <tr>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Garantía</th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_relevante[0].garantia}</td>
+                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Aviso Legal</th>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_relevante[0].aviso_legal}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="bg-slate-500 shadow-2xl rounded-lg m-4 h-[110vh] w-[50%] overflow-y-scroll p-5">
+
+                    <div className="mx-6">
+                        <h1 className="font-bold text-xl text-center">Opiniones de clientes</h1>
+                        <button className="
+                            inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all 
+                            rounded-lg cursor-pointer bg-sky-800 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md 
+                            bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs m-2">Añadir</button>
+                    </div>
+
+                    {opiniones[0].lista_opiniones.map(opi => {
                         return (
-                            <li key={item2.id}>{item2.datos}</li>
+                            <div className="m-3 p-3 shadow-2xl rounded-xl bg-slate-100" key={opi.id_opi}>
+                                <h1 className="text-black"><strong>{opi.fecha} </strong> Publicado por <strong>{opi.autor}</strong></h1>
+
+                                <div className="flex flex-row">
+                                    <div>
+                                        <h1 className={opi.compra_verifi == true ? 'text-green-600' : 'text-red-600'}>{opi.compra_verifi == true ? 'Compra Verificada' : 'Compra No Verificada'}</h1>
+                                    </div>
+                                    <div className={opi.compra_verifi == true ? 'text-green-600' : 'text-red-600'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                            <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-black">{opi.texto}</p>
+                                </div>
+                            </div>
                         );
                     })}
                 </div>
 
-                <div className="basis-1/2 md:w-[50%] sm:w-[97%] xs:w-[97%] m-4">
-                    <div className="w-[45%] text-center">
-                        <h2 className="font-bold">Sobre este producto</h2>
-                    </div>
-
-                    <p>{sinopsis}</p>
-                </div>
-
             </div>
-
-            <br />
-
-            {/* Especificaciones Tecnicas */}
-            <div className="bg-slate-400 shadow-2xl rounded-lg p-2">
-
-                <div className="mx-6">
-                    <h1 className="font-bold text-xl">Especificaciones técnicas</h1>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Informacion Basica</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tonalidad de Color</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].info_basica[0].color}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Fuentes de Alimentacion de Energia</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                    {datos[0].info_basica[0].fuente.map(item3 => {
-                                        return (
-                                            <p key={item3.id}>{item3.datos}</p>
-                                        );
-                                    })}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Linea Modelo Referencia</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].info_basica[0].modelo}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Almacenamiento y Procesamiento</h2>
-                </div>
-
-                {/* Especificaciones Tecnicas */}
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Memoria RAM</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].memoria_ram}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Capacidad de Disco</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].capacidad_disco}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tipos de Discos que Incluye</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].incluye_disco}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Sistema Operativo</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].sistema_operativo}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Version Sistema Operativo</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].ver_sistema_operativo}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Procesador</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].procesador}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Velocidad del Procesador</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].velocidad_procesa}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Nucleos del Procesador</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].nucleo_procesa}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca del Procesador</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_procesa}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Modelo del Procesador</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].modelo_procesa}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca Tarjeta de Video/Grafica</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_tarjeta_video}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Imagen y Pantalla</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tamaño Pantalla</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].imagen_pantalla[0].tamaño_pantalla}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Resolucion Pantalla</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].imagen_pantalla[0].resolucion_pantalla}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Conectividad</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tipos de Puertos Entradas y Salidas</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                    {datos[0].conectividad[0].puertos_e_i.map(item4 => {
-                                        return (
-                                            <p key={item4.id}>{item4.datos}</p>
-                                        );
-                                    })}
-                                </td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">No. Puertos USB</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].conectividad[0].puertos_usb}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">No. Puertos HDMI</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].conectividad[0].puerto_hdmi}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">No. Puertos USB tipo C</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].conectividad[0].puerto_tipo_c}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">No. Salidas de Audio</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].conectividad[0].puerto_salida_audio}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Características Técnicas</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Opciones de Conectividad</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                    {datos[0].caract_tecnica[0].opciones_conect.map(item5 => {
-                                        return (
-                                            <p key={item5.id}>{item5.datos}</p>
-                                        );
-                                    })}
-                                </td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Duracion de la Bateria</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].caract_tecnica[0].duracion_bateria}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Características Físicas</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas del Teclado</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                    {datos[0].caract_fisica[0].caract_teclado.map(item6 => {
-                                        return (
-                                            <p key={item6.id}>{item6.datos}</p>
-                                        );
-                                    })}
-                                </td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Peso</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].caract_fisica[0].peso}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Resolucion Camara WEB</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].caract_fisica[0].resolucion_camara_web}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Unidad CD/DVD Integrada</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].caract_fisica[0].unidad_cd_dvd}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Detalles del Producto</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Nivel de Uso</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].detalles_productos[0].nivel_uso}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas Especiales</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">
-                                    {datos[0].detalles_productos[0].caract_especiales.map(item7 => {
-                                        return (
-                                            <p key={item7.id}>{item7.datos}</p>
-                                        );
-                                    })}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mx-4">
-                    <h2 className="font-bold text-md">Información Adicional Relevante</h2>
-                </div>
-
-                <div className="m-3">
-                    <table className="border-collapse border border-slate-500">
-                        <tbody>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Garantía</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].info_relevante[0].garantia}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Qué incluye el producto</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].info_relevante[0].incluye}</td>
-                            </tr>
-                            <tr>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Aviso Legal</th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left">{datos[0].info_relevante[0].aviso_legal}</td>
-                                <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                <td className="p-2 border border-slate-600 w-[25%] text-left"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <br />
-
-            {/* <div className="flex flex-col bg-slate-400 shadow-2xl rounded-lg">
-
-                <div className="mx-6">
-                    <h1 className="font-bold text-xl">Opiniones de clientes</h1>
-                </div>
-
-                {opiniones[0].lista_opiniones.map(opi => {
-                    return (
-                        <div className="m-3 p-3 shadow-2xl rounded-xl bg-slate-100">
-                            <h1 className="text-black"><strong>{opi.fecha} </strong> Publicado por <strong>{opi.autor}</strong></h1>
-
-                            <div className="flex flex-row">
-                                <div>
-                                    <h1 className={opi.compra_verifi == true ? 'text-green-600' : 'text-red-600'}>{opi.compra_verifi == true ? 'Compra Verificada' : 'Compra No Verificada'}</h1>
-                                </div>
-                                <div className={opi.compra_verifi == true ? 'text-green-600' : 'text-red-600'}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                        <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-black">{opi.texto}</p>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div> */}
         </>
     );
 }
