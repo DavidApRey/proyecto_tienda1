@@ -1003,9 +1003,75 @@ export async function fetch_opiniones_by_id(id) {
     return filter_data;
 }
 
+// export async function pruebas() {
+//     const data = await fetch(`https://backendtienda1311.000webhostapp.com/pruebas.php`)
+//         .then(res => res.json());
+
+//     return data;
+// }
+
 export async function pruebas() {
-    const data = await fetch(`https://backendtienda1311.000webhostapp.com/pruebas.php`)
+    const data = [
+        {
+            "id_cons": 2,
+            "id_marca": 4,
+            "modelo": "Ryzen 5",
+            "velocidad": "2.8",
+            "num_nucleos": "4",
+            "referencia": "7520U"
+        },
+        {
+            "id_cons": 3,
+            "id_marca": 3,
+            "modelo": "Core I3",
+            "velocidad": "4.5",
+            "num_nucleos": "5",
+            "referencia": "1305U"
+        }
+    ]
+
+    return data;
+}
+
+export async function fetch_datos_alma() {
+
+    // https://backendtienda1311.000webhostapp.com/pruebas.php
+
+    const data = await fetch(`http://localhost/backendtienda/almaCRUD.php?datos_general=all`)
         .then(res => res.json());
+
+    // const data = {
+
+    // };
+    // fetch(``, {
+    //     method: 'PUT',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    // })
+    //     .then(response => {
+    //         console.log(response)
+    //     })
+    //     .catch(error => {
+    //         console.error('Error al realizar la solicitud:', error);
+    //     });
+
+    return data;
+}
+
+export async function fetch_datos_alma_especi(id) {
+    const data = await fetch(`http://localhost/backendtienda/almaCRUD.php?datos_especi=all&id_alma=${id}`)
+        .then(res => res.json());
+
+    return data;
+}
+
+export async function fetch_lista_marcas() {
+    const data = await fetch(`http://localhost/backendtienda/marcaCRUD.php?datos_general=all`)
+        .then(res => res.json());
+
+    // console.log(data)
 
     return data;
 }

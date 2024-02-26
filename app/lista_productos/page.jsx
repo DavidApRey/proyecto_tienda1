@@ -11,7 +11,6 @@ async function Page() {
             <ListaProductos datos={datos} />
         </>
     )
-
 }
 
 export default Page

@@ -14,7 +14,6 @@ async function page({ params }) {
 
     return (
         <>
-
             <div className="m-2">
                 <h1 className="text-black xs:w-[30vw] md:w-[50vw] lg:w-[70vw] text-xl font-bold">{nombre_producto}</h1>
                 <p className="text-gray-500 text-sm">Código: {codigo_equipo}</p>
