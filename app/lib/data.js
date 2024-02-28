@@ -1035,27 +1035,8 @@ export async function pruebas() {
 
 export async function fetch_datos_alma() {
 
-    // https://backendtienda1311.000webhostapp.com/pruebas.php
-
     const data = await fetch(`http://localhost/backendtienda/almaCRUD.php?datos_general=all`)
         .then(res => res.json());
-
-    // const data = {
-
-    // };
-    // fetch(``, {
-    //     method: 'PUT',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    // })
-    //     .then(response => {
-    //         console.log(response)
-    //     })
-    //     .catch(error => {
-    //         console.error('Error al realizar la solicitud:', error);
-    //     });
 
     return data;
 }
@@ -1074,4 +1055,9 @@ export async function fetch_lista_marcas() {
     // console.log(data)
 
     return data;
+}
+
+export async function fetch_editar_alma(postData) {
+
+    
 }

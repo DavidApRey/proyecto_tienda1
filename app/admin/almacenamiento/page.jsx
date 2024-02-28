@@ -1,21 +1,26 @@
+'use client';
 import { IconButton, Box, Typography, Modal } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
+
 import Swal from 'sweetalert2';
 
 import {
     Edit as EditIcon,
     Delete as DeleteIcon,
 } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import Modal_edit_alma from './modal_edit_alma';
+import { useState } from 'react';
+import { fetch_datos_alma } from '@/app/lib/data';
+import Link from 'next/link';
 
-function AlmaCRUD({ data }) {
+function page() {
 
-    const [open_edit, setOpen_edit] = useState(false);
-    const handleOpen_edit = () => setOpen_edit(true);
-    const handleClose_edit = () => setOpen_edit(false);
-    const [id_cons, setIdCons] = useState('');
+    const [data, setData] = useState([]);
+
+    const setingDatos = async () => {
+        const int_data = await fetch_datos_alma();
+        setData(int_data);
+    }
 
     const Toast = Swal.mixin({
         toast: true,
@@ -43,11 +48,6 @@ function AlmaCRUD({ data }) {
                 });
             }
         });
-    }
-
-    const editar_alma = async (id) => {
-        setIdCons(id);
-        handleOpen_edit();
     }
 
     const columns = [
@@ -91,9 +91,20 @@ function AlmaCRUD({ data }) {
         },
     ];
 
+    setingDatos()
+
     return (
         <>
+
+            <div className='flex flex-rows m-6'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="text-black w-8 h-8 mx-2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                </svg>
+                <h1 className='text-black text-xl font-bold'>Dispositivos almacenamiento</h1>
+            </div>
+
             <div className='m-5'>
+
                 <MaterialReactTable
                     columns={columns}
                     data={data}
@@ -101,20 +112,12 @@ function AlmaCRUD({ data }) {
                     enableRowActions
                     renderRowActions={({ row }) => (
                         <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-                            <IconButton
-                                color="secondary"
-                                onClick={() => {
-                                    editar_alma(row.original.id_cons)
-                                }}
-                            >
-                                <EditIcon />
+                            <IconButton color="secondary">
+                                <Link href={`/admin/almacenamiento/${row.original.id_cons}`}>
+                                    <EditIcon />
+                                </Link>
                             </IconButton>
-                            <IconButton
-                                color="error"
-                                onClick={() => {
-                                    showSwal();
-                                }}
-                            >
+                            <IconButton color="error">
                                 <DeleteIcon />
                             </IconButton>
                         </Box>
@@ -122,16 +125,8 @@ function AlmaCRUD({ data }) {
                 />
             </div>
 
-            <Modal
-                open={open_edit}
-                onClose={handleClose_edit}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Modal_edit_alma id={id_cons} />
-            </Modal>
         </>
     )
 }
 
-export default AlmaCRUD
+export default page

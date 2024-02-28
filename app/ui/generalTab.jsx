@@ -5,7 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AlmaCRUD from './almaCRUD/almaCRUD';
 import MarcaCRUD from './marcaCRUD';
 import MemramCRUD from './memramCRUD';
@@ -54,6 +54,10 @@ function GeneralTab({ data_alma, data_procesa, data_mem_ram, data_so, data_marca
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        
+    }, [data_alma])
 
     return (
         <div>
