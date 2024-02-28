@@ -1,6 +1,7 @@
 import { fetch_datos_alma_especi, fetch_editar_alma, fetch_lista_marcas } from '@/app/lib/data';
 import { Box } from '@mui/material';
 import Swal from 'sweetalert2';
+import { redirect } from 'next/navigation'
 import { useState } from 'react';
 
 const style_edit = {
@@ -92,7 +93,7 @@ function Modal_edit_alma({ id }) {
             .then((response) => response.text())
             .then((responseData) => {
                 if (responseData == "200") {
-
+                    redirect('/admin/almacenamiento')
                 } else {
                     Toast.fire({
                         icon: "error",

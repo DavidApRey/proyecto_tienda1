@@ -2,6 +2,7 @@
 
 import { fetch_datos_alma_especi, fetch_lista_marcas } from '@/app/lib/data';
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 
 function page({ params }) {
 
@@ -9,6 +10,18 @@ function page({ params }) {
     const [capacidad, setCapacidad] = useState('');
     const [tipo_disco, setTipoDisco] = useState('');
     const [estado, setEstado] = useState('');
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const datos_edit = async (id) => {
         const data = await fetch_datos_alma_especi(id);
@@ -69,6 +82,42 @@ function page({ params }) {
 
             select_marca_edit.appendChild(option);
         });
+    }
+
+    const editar_enviar = () => {
+
+        let select_marca_edit = document.getElementById('select_marca_edit');
+
+        const postData = {
+            id_cons: id_cons,
+            capacidad: capacidad,
+            marca: select_marca_edit.value,
+            tipo_disco: tipo_disco,
+            estado: estado,
+        }
+
+        fetch(`http://localhost/backendtienda/almaCRUD.php`, {
+            method: 'PUT',
+            body: JSON.stringify(postData),
+            Headers: {
+                Accept: 'application/json',
+                'Content-Type': 'text/html'
+            }
+        })
+            .then((response) => response.text())
+            .then((responseData) => {
+                if (responseData == "200") {
+                    redirect('/admin/almacenamiento')
+                } else {
+                    Toast.fire({
+                        icon: "error",
+                        title: "No se pudo realizar la actualización"
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('error', error)
+            });
     }
 
     datos_edit(params.almacenamiento);
