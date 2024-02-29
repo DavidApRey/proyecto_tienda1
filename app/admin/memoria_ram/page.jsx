@@ -43,7 +43,7 @@ function page() {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                fetch(`http://localhost/backendtienda/memoria_ramCRUD.php`, {
+                fetch(`https://backendtienda1311.000webhostapp.com/memoria_ramCRUD.php`, {
                     method: 'DELETE',
                     body: JSON.stringify({ id_cons: id }),
                     Headers: {

@@ -42,7 +42,7 @@ function page() {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                fetch(`http://localhost/backendtienda/marcaCRUD.php`, {
+                fetch(`https://backendtienda1311.000webhostapp.com/marcaCRUD.php`, {
                     method: 'DELETE',
                     body: JSON.stringify({ id_cons: id }),
                     Headers: {

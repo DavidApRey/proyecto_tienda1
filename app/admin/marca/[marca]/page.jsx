@@ -77,7 +77,7 @@ function page({ params }) {
             estado: estado_edit.value
         }
 
-        fetch(`http://localhost/backendtienda/marcaCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/marcaCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {

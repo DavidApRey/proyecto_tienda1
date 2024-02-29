@@ -22,7 +22,7 @@ function page() {
         let marca = document.getElementById('marca');
         let estado = document.getElementById('estado');
 
-        fetch(`http://localhost/backendtienda/marcaCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/marcaCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {

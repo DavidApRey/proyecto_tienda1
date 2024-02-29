@@ -99,7 +99,7 @@ function page({ params }) {
             estado: estado_edit.value
         }
 
-        fetch(`http://localhost/backendtienda/almaCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/almaCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {

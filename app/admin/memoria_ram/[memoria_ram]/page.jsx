@@ -113,7 +113,7 @@ function page({ params }) {
             estado: estado_edit.value
         }
 
-        fetch(`http://localhost/backendtienda/memoria_ramCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/memoria_ramCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {

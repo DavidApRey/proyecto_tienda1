@@ -45,7 +45,7 @@ function page() {
         let tipo_disco = document.getElementById('tipo_disco');
         let estado = document.getElementById('estado');
 
-        fetch(`http://localhost/backendtienda/almaCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/almaCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {
