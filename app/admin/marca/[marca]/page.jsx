@@ -1,15 +1,16 @@
 'use client';
 
-import { fetch_datos_alma_especi, fetch_lista_marcas } from '@/app/lib/data';
+import { fetch_lista_marcas_especi } from '@/app/lib/data';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 
 function page({ params }) {
 
+    console.log(params)
+
     const [id_cons, setIdCons] = useState('');
-    const [capacidad, setCapacidad] = useState('');
-    const [tipo_disco, setTipoDisco] = useState('');
+    const [marca, setMarca] = useState('');
     const [estado, setEstado] = useState('');
 
     const Toast = Swal.mixin({
@@ -25,15 +26,17 @@ function page({ params }) {
     });
 
     const datos_edit = async (id) => {
-        const data = await fetch_datos_alma_especi(id);
+        const data = await fetch_lista_marcas_especi(id);
+        console.log(data)
+
+        let marca_edit = document.getElementById('marca_edit');
+        marca_edit.value = data[0].marca;
 
         setIdCons(data[0].id_cons);
-        setCapacidad(data[0].capacidad);
-        setTipoDisco(data[0].tipo_disco);
+        setMarca(data[0].marca);
         setEstado(data[0].estado);
 
         await call_select_estado_edit(data[0].estado);
-        await call_select_marca(data[0].id_marca);
     }
 
     const call_select_estado_edit = async (estado) => {
@@ -63,43 +66,18 @@ function page({ params }) {
         estado_edit.appendChild(option2);
     }
 
-    const call_select_marca = async (id) => {
-        const resp_lista_marcas = await fetch_lista_marcas();
-        let select_marca_edit = document.getElementById('select_marca_edit');
-        select_marca_edit.innerHTML = '';
-
-        let option1 = document.createElement('option');
-        option1.value = '';
-        option1.text = 'Seleccione';
-        select_marca_edit.appendChild(option1);
-
-        resp_lista_marcas.forEach(item => {
-            let option = document.createElement('option');
-            option.value = item.id_cons;
-            option.text = item.marca;
-
-            if (id == item.id_cons) {
-                option.selected = true;
-            }
-
-            select_marca_edit.appendChild(option);
-        });
-    }
-
     const editar_enviar = () => {
 
-        let select_marca_edit = document.getElementById('select_marca_edit');
         let estado_edit = document.getElementById('estado_edit');
+        let marca_edit = document.getElementById('marca_edit');
 
         const postData = {
             id_cons: id_cons,
-            capacidad: capacidad,
-            marca: select_marca_edit.value,
-            tipo_disco: tipo_disco,
+            marca: marca_edit.value,
             estado: estado_edit.value
         }
 
-        fetch(`http://localhost/backendtienda/almaCRUD.php`, {
+        fetch(`http://localhost/backendtienda/marcaCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {
@@ -127,32 +105,25 @@ function page({ params }) {
             });
     }
 
-    datos_edit(params.almacenamiento);
+    datos_edit(params.marca);
 
     return (
         <div className='flex justify-center bg-white w-[50%]'>
             <div>
                 <div className='max-w-sm mx-auto space-y-6'>
-                    <h2 className="text-2xl font-bold text-black">Editar Almacenamiento</h2>
+                    <h2 className="text-2xl font-bold text-black">Editar Marca</h2>
                     <hr className="my-6" />
 
                     <input type="hidden" id='id_cons_edit' value={id_cons} className='text-black' />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Marca</label>
-                    <select id='select_marca_edit' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
-                    </select>
-
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Capacidad</label>
-                    <input type="text" id='capacidad_editar' value={capacidad} className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
-
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Tipo Disco</label>
-                    <input type="text" id='tipo_disco_edit' value={tipo_disco} className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    <input type="text" id='marca_edit' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Estado</label>
                     <select id='estado_edit' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
                     </select>
 
-                    <Link href="../../admin/almacenamiento" className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300" onClick={async () => await editar_enviar()}>Actualizar</Link>
+                    <Link href="../../admin/marca" onClick={async () => await editar_enviar()} className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300">Actualizar</Link>
                 </div>
             </div>
         </div>
