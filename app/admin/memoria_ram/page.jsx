@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { fetch_lista_memoria_ram } from '@/app/lib/data';
 import Link from 'next/link';
 
-function page() {
+function Page() {
 
     const [data, setData] = useState([]);
 
@@ -162,4 +162,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 
-function page({ params }) {
+function Page({ params }) {
 
     console.log(params)
 
@@ -175,4 +175,4 @@ function page({ params }) {
     )
 }
 
-export default page
+export default Page

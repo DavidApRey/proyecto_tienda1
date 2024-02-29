@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 import Swal from 'sweetalert2';
 
-function page() {
+function Page() {
 
     const Toast = Swal.mixin({
         toast: true,
@@ -79,4 +79,4 @@ function page() {
     )
 }
 
-export default page
+export default Page
