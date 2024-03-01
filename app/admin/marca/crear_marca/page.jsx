@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react'
 import Swal from 'sweetalert2';
 
 function Page() {

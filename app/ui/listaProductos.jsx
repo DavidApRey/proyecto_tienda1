@@ -12,8 +12,6 @@ function ListaProductos({ datos }) {
     const [marca, setMarca] = useState('');
     const [procesador, setProcesador] = useState('');
 
-    console.log(datos)
-
     useEffect(() => {
         aplicarFiltro();
     }, []);

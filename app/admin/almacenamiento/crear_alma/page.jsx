@@ -2,7 +2,6 @@
 
 import { fetch_lista_marcas } from '@/app/lib/data';
 import Link from 'next/link';
-import React from 'react'
 import Swal from 'sweetalert2';
 
 function Page() {
