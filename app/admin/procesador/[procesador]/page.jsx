@@ -1,6 +1,6 @@
 'use client';
 
-import { fetch_datos_alma_especi, fetch_lista_marcas } from '@/app/lib/data';
+import { fetch_lista_procesador_especi, fetch_lista_marcas } from '@/app/lib/data';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
@@ -8,8 +8,9 @@ import Swal from 'sweetalert2';
 function Page({ params }) {
 
     const [id_cons, setIdCons] = useState('');
-    const [capacidad, setCapacidad] = useState('');
-    const [tipo_disco, setTipoDisco] = useState('');
+    const [modelo, setModelo] = useState('');
+    const [velocidad, setVelocidad] = useState('');
+    const [num_nucleos, setNum_nucleos] = useState('');
     const [estado, setEstado] = useState('');
 
     const Toast = Swal.mixin({
@@ -25,16 +26,19 @@ function Page({ params }) {
     });
 
     const datos_edit = async (id) => {
-        const data = await fetch_datos_alma_especi(id);
+        const data = await fetch_lista_procesador_especi(id);
+
+        let select_marca_edit = document.getElementById('select_marca_edit');
+        let modelo_editar = document.getElementById('modelo_editar');
+        let velocidad_edit = document.getElementById('velocidad_edit');
+        let num_nucleos_edit = document.getElementById('num_nucleos_edit');
 
         setIdCons(data[0].id_cons);
-        setEstado(data[0].estado);
 
-        let capacidad_editar = document.getElementById('capacidad_editar');
-        let tipo_disco_edit = document.getElementById('tipo_disco_edit');
-
-        capacidad_editar.value = data[0].capacidad
-        tipo_disco_edit.value = data[0].tipo_disco
+        select_marca_edit.value = data[0].id_marca;
+        modelo_editar.value = data[0].modelo;
+        velocidad_edit.value = data[0].velocidad;
+        num_nucleos_edit.value = data[0].num_nucleos;
 
         await call_select_estado_edit(data[0].estado);
         await call_select_marca(data[0].id_marca);
@@ -94,18 +98,20 @@ function Page({ params }) {
 
         let select_marca_edit = document.getElementById('select_marca_edit');
         let estado_edit = document.getElementById('estado_edit');
-        let capacidad_editar = document.getElementById('capacidad_editar');
-        let tipo_disco_edit = document.getElementById('tipo_disco_edit');
+        let modelo_editar = document.getElementById('modelo_editar');
+        let velocidad_edit = document.getElementById('velocidad_edit');
+        let num_nucleos_edit = document.getElementById('num_nucleos_edit');
 
         const postData = {
             id_cons: id_cons,
-            capacidad: capacidad_editar.value,
-            marca: select_marca_edit.value,
-            tipo_disco: tipo_disco_edit.value,
+            modelo: modelo_editar.value,
+            id_marca: select_marca_edit.value,
+            velocidad: velocidad_edit.value,
+            num_nucleos: num_nucleos_edit.value,
             estado: estado_edit.value
         }
 
-        fetch(`https://backendtienda1311.000webhostapp.com/almaCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/procesadorCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {
@@ -133,13 +139,13 @@ function Page({ params }) {
             });
     }
 
-    datos_edit(params.almacenamiento);
+    datos_edit(params.procesador);
 
     return (
         <div className='flex justify-center bg-white w-[50%]'>
             <div>
                 <div className='max-w-sm mx-auto space-y-6'>
-                    <h2 className="text-2xl font-bold text-black">Editar Almacenamiento</h2>
+                    <h2 className="text-2xl font-bold text-black">Editar Procesador</h2>
                     <hr className="my-6" />
 
                     <input type="hidden" id='id_cons_edit' value={id_cons} className='text-black' />
@@ -148,17 +154,20 @@ function Page({ params }) {
                     <select id='select_marca_edit' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
                     </select>
 
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Capacidad</label>
-                    <input type="text" id='capacidad_editar' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Modelo</label>
+                    <input type="text" id='modelo_editar' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Tipo Disco</label>
-                    <input type="text" id='tipo_disco_edit' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Velocidad</label>
+                    <input type="text" id='velocidad_edit' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Numero Nucleos</label>
+                    <input type="text" id='num_nucleos_edit' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Estado</label>
                     <select id='estado_edit' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
                     </select>
 
-                    <Link href="../../admin/almacenamiento" className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300" onClick={async () => await editar_enviar()}>Actualizar</Link>
+                    <Link href="../../admin/procesador" className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300" onClick={async () => await editar_enviar()}>Actualizar</Link>
                 </div>
             </div>
         </div>

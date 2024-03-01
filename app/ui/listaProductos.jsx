@@ -4,12 +4,15 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { fetch_lista_marcas, fetch_lista_procesador } from '../lib/data';
 
 function ListaProductos({ datos }) {
 
+    const [dataFilter, setDataFilter] = useState(datos);
     const [marca, setMarca] = useState('');
     const [procesador, setProcesador] = useState('');
-    const [dataFilter, setDataFilter] = useState(datos);
+
+    console.log(datos)
 
     useEffect(() => {
         aplicarFiltro();
@@ -19,20 +22,80 @@ function ListaProductos({ datos }) {
 
         let data_filter;
 
-        if (marca == '' && procesador == '') {
+        let select_marca = document.getElementById('select_marca');
+        let select_procesador = document.getElementById('select_procesador');
+
+        if (select_marca.value == '' && select_procesador.value == '') {
             data_filter = datos;
             setDataFilter(data_filter);
-        } else if (marca != '' && procesador == '') {
-            data_filter = datos.filter(item => item.marca == marca);
+            setMarca(select_marca.value);
+            setProcesador(select_procesador.value);
+        } else if (select_marca.value != '' && select_procesador.value == '') {
+            data_filter = datos.filter(item => item.marca == select_marca.value);
             setDataFilter(data_filter);
-        } else if (marca == '' && procesador != '') {
-            data_filter = datos.filter(item => item.procesador == procesador);
+            setMarca(select_marca.value);
+            setProcesador(select_procesador.value);
+        } else if (select_marca.value == '' && select_procesador.value != '') {
+            data_filter = datos.filter(item => item.procesador == select_procesador.value);
             setDataFilter(data_filter);
-        } else if (marca != '' && procesador != '') {
-            data_filter = datos.filter(item => item.procesador == procesador && item.marca == marca);
+            setMarca(select_marca.value);
+            setProcesador(select_procesador.value);
+        } else if (select_marca.value != '' && select_procesador.value != '') {
+            data_filter = datos.filter(item => item.procesador == select_procesador.value && item.marca == select_marca.value);
             setDataFilter(data_filter);
+            setMarca(select_marca.value);
+            setProcesador(select_procesador.value);
         }
     }
+
+    const call_select_marca = async () => {
+        const resp_lista_marcas = await fetch_lista_marcas();
+        let select_marca = document.getElementById('select_marca');
+        select_marca.innerHTML = '';
+
+        let option1 = document.createElement('option');
+        option1.value = '';
+        option1.text = 'Seleccione';
+        select_marca.appendChild(option1);
+
+        resp_lista_marcas.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.marca;
+            option.text = item.marca;
+
+            if (marca == item.marca) {
+                option.selected = true;
+            }
+
+            select_marca.appendChild(option);
+        });
+    }
+
+    const call_select_procesador = async () => {
+        const resp_lista_procesador = await fetch_lista_procesador();
+        let select_procesador = document.getElementById('select_procesador');
+        select_procesador.innerHTML = '';
+
+        let option1 = document.createElement('option');
+        option1.value = '';
+        option1.text = 'Seleccione';
+        select_procesador.appendChild(option1);
+
+        resp_lista_procesador.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.modelo;
+            option.text = item.modelo;
+
+            if (procesador == item.modelo) {
+                option.selected = true;
+            }
+
+            select_procesador.appendChild(option);
+        });
+    }
+
+    call_select_marca();
+    call_select_procesador();
 
     return (
         <div className='m-6'>
@@ -48,10 +111,8 @@ function ListaProductos({ datos }) {
                     <div>
                         <strong className="text-black m-2">Marca Equipo</strong>
                     </div>
-                    <select name="marca" onChange={(e) => setMarca(e.target.value)} className="m-2 p-2 rounded-lg border-sky-950 border-2 text-black bg-slate-300 w-[10rem]">
-                        <option value=""></option>
-                        <option value="ASUS">ASUS</option>
-                        <option value="LENOVO">LENOVO</option>
+                    <select id="select_marca" className="m-2 p-2 rounded-lg border-sky-950 border-2 text-black bg-slate-300 w-[10rem]">
+
                     </select>
                 </div>
 
@@ -59,10 +120,7 @@ function ListaProductos({ datos }) {
                     <div>
                         <strong className="text-black m-2">Procesador</strong>
                     </div>
-                    <select name="procesador" onChange={(e) => setProcesador(e.target.value)} className="m-2 p-2 rounded-md border-sky-950 border-2 text-black bg-slate-300 w-[10rem]">
-                        <option value=""></option>
-                        <option value="Intel Core I3">Intel Core I3</option>
-                        <option value="AMD R5">AMD R5</option>
+                    <select id="select_procesador" className="m-2 p-2 rounded-md border-sky-950 border-2 text-black bg-slate-300 w-[10rem]">
                     </select>
                 </div>
             </div>
@@ -70,7 +128,7 @@ function ListaProductos({ datos }) {
 
             {dataFilter.map(item => {
                 return (
-                    <Link className="bg-slate-300 flex flex-row rounded-lg m-2 my-5 w-[75vw]" href={`/lista_productos/${item.id}`} key={item.id}>
+                    <Link className="bg-slate-300 flex flex-row rounded-lg m-2 my-5 w-[75vw]" href={`/lista_productos/${item.id_cons}`} key={item.id_cons}>
                         <div className="flex md:flex-row sm:flex-col xs:flex-col">
 
                             {/* Imagen del producto */}
@@ -89,7 +147,7 @@ function ListaProductos({ datos }) {
                                     className="rounded-xl"
                                     width="270"
                                     height="270"
-                                    src={item.ruta_imagen}
+                                    src={item.imagen}
                                 />
                             </div>
 
@@ -97,7 +155,7 @@ function ListaProductos({ datos }) {
                             <div className="relative xs:w-[20vw] md:w-[30vw] lg:w-[30vw] m-2 p-2">
 
                                 <div className="flex flex-row">
-                                    <div className="text-black rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">{item.marca}</div>
+                                    <div className="text-black rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">{item.codigo_marca[0].marca}</div>
                                     <div className="text-black text-center w-[7rem] rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400 m-1">Envio Gratis</div>
                                 </div>
 
@@ -112,15 +170,15 @@ function ListaProductos({ datos }) {
                                         <tbody>
                                             <tr>
                                                 <th className="border border-black bg-slate-600 text-left text-[14px] p-1">Procesador</th>
-                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.procesador}</td>
+                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.codigo_procesador[0].modelo}</td>
                                             </tr>
                                             <tr>
                                                 <th className="border border-black bg-slate-600 text-left text-[14px] p-1">Capacidad de Disco</th>
-                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.capacidad_disco}</td>
+                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.codigo_almacenamiento[0].tipo_disco} - {item.codigo_almacenamiento[0].capacidad} GB</td>
                                             </tr>
                                             <tr>
                                                 <th className="border border-black bg-slate-600 text-left text-[14px] p-1">Memoria RAM</th>
-                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.memoria_ram}</td>
+                                                <td className="border border-black text-black text-left text-[14px] p-1">{item.codigo_memoria_ram[0].capacidad} GB</td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -1,22 +1,16 @@
-import { fetch_opiniones_by_id, fetch_producto_by_id, pruebas } from "@/app/lib/data";
+import { fetch_opiniones_by_id, fetch_producto_by_id } from "@/app/lib/data";
 
 async function page({ params }) {
 
     const datos = await fetch_producto_by_id(params.productId);
-    const opiniones = await fetch_opiniones_by_id(params.productId);
-
-    const pruebas_res = await pruebas();
-
-    let nombre_producto = datos[0].nombre_producto;
-    let codigo_equipo = datos[0].codigo_equipo;
-    let ruta_imagen = datos[0].ruta_imagen;
-    let sinopsis = datos[0].sinopsis;
+    const opiniones = await fetch_opiniones_by_id(datos[0].id_articulo);
+    console.log(opiniones)
 
     return (
         <>
             <div className="m-2">
-                <h1 className="text-black xs:w-[30vw] md:w-[50vw] lg:w-[70vw] text-xl font-bold">{nombre_producto}</h1>
-                <p className="text-gray-500 text-sm">Código: {codigo_equipo}</p>
+                <h1 className="text-black xs:w-[30vw] md:w-[50vw] lg:w-[70vw] text-xl font-bold">{datos[0].nombre_producto}</h1>
+                <p className="text-gray-500 text-sm">Código: {datos[0].codigo_equipo}</p>
 
                 <div className="flex justify-start">
                     <div className="text-black text-sm text-center m-1 w-[6rem] rounded-xl border-spacing-3 p-1 border-2 border-sky-950 hover:bg-slate-400">Envio Gratis</div>
@@ -27,11 +21,11 @@ async function page({ params }) {
             <div className="flex justify-center align-middle md:flex-row sm:flex-col xs:flex-col">
 
                 <div className="basic-1/2 m-2 xs:w-[20vw] xm:w-[20vw] md:w-[20vw] lg:w-[25vw]">
-                    <img className="rounded-xl" src={ruta_imagen} alt="" />
+                    <img className="rounded-xl" src={datos[0].imagen} alt="" />
                 </div>
 
                 <div className="basic-1/2 shadow-2xl rounded-lg p-2 md:w-[50%] sm:w-[100%] xs:w-[97%]">
-                    <h1 className="text-red-600 font-medium text-3xl text-center">$1.749.000 Hoy</h1>
+                    <h1 className="text-red-600 font-medium text-3xl text-center">${datos[0].precio} Hoy</h1>
 
                     <div className="flex flex-row">
                         <div className={`bg-slate-400 text-center m-2 w-[50%] rounded-md shadow-xl p-2 hover:bg-slate-800`}>
@@ -85,7 +79,7 @@ async function page({ params }) {
                                 <h2 className="font-bold">Sobre este producto</h2>
                             </div>
 
-                            <p>{sinopsis}</p>
+                            <p>{datos[0].sinopsis}</p>
                         </div>
 
                     </div>
@@ -109,21 +103,9 @@ async function page({ params }) {
                             <tbody>
                                 <tr>
                                     <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tonalidad de Color</th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_basica[0].color}</td>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].color}</td>
                                     <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Linea Modelo Referencia</th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_basica[0].modelo}</td>
-                                </tr>
-                                <tr>
-                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Caracteristicas Especiales</th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left">
-                                        {datos[0].detalles_productos[0].caract_especiales.map(item7 => {
-                                            return (
-                                                <p key={item7.id}>{item7.datos}</p>
-                                            );
-                                        })}
-                                    </td>
-                                    <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left"></td>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].modelo}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -139,39 +121,33 @@ async function page({ params }) {
                                 <tbody>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Memoria RAM</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].memoria_ram}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_memoria_ram[0].capacidad} GB - {datos[0].codigo_memoria_ram[0].velocidad}Hz - {datos[0].codigo_memoria_ram[0].socket}</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Capacidad de Disco</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].capacidad_disco}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_almacenamiento[0].capacidad} {datos[0].codigo_almacenamiento[0].tipo_disco}</td>
                                     </tr>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Tipos de Discos que Incluye</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].incluye_disco}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_almacenamiento[0].tipo_disco}</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Sistema Operativo</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].sistema_operativo}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_sistema_operativo[0].sistema_operativo}</td>
                                     </tr>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Version Sistema Operativo</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].ver_sistema_operativo}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_sistema_operativo[0].version_so}</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Procesador</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].procesador}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_procesador[0].modelo} {datos[0].codigo_procesador[0].referencia} - {datos[0].codigo_procesador[0].velocidad} GHz - {datos[0].codigo_procesador[0].num_nucleos} Nucleos</td>
                                     </tr>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Velocidad del Procesador</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].velocidad_procesa}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_procesador[0].velocidad} GHz</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Nucleos del Procesador</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].nucleo_procesa}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_procesador[0].num_nucleos} Nucleos</td>
                                     </tr>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca del Procesador</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_procesa}</td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_procesador[0].marca}</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Modelo del Procesador</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].modelo_procesa}</td>
-                                    </tr>
-                                    <tr>
-                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Marca Tarjeta de Video/Grafica</th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].almacen_procesa[0].marca_tarjeta_video}</td>
-                                        <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left"></th>
-                                        <td className="p-2 border border-slate-800 w-[25%] text-left"></td>
+                                        <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].codigo_procesador[0].modelo} {datos[0].codigo_procesador[0].referencia}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -186,9 +162,9 @@ async function page({ params }) {
                                 <tbody>
                                     <tr>
                                         <th className="p-2 border border-slate-800 bg-slate-600 w-[9vw] text-left">Tamaño Pantalla</th>
-                                        <td className="p-2 border border-slate-800 w-[9vw] text-left">{datos[0].imagen_pantalla[0].tamaño_pantalla}</td>
+                                        <td className="p-2 border border-slate-800 w-[9vw] text-left">{datos[0].tamaño_pantalla}</td>
                                         <th className="p-2 border border-slate-800 bg-slate-600 text-left">Resolucion Pantalla</th>
-                                        <td className="p-2 border border-slate-800 text-left">{datos[0].imagen_pantalla[0].resolucion_pantalla}</td>
+                                        <td className="p-2 border border-slate-800 text-left">{datos[0].resolucion_pantalla}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -204,9 +180,9 @@ async function page({ params }) {
                             <tbody>
                                 <tr>
                                     <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Garantía</th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_relevante[0].garantia}</td>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].garantia}</td>
                                     <th className="p-2 border border-slate-800 bg-slate-600 w-[25%] text-left">Aviso Legal</th>
-                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].info_relevante[0].aviso_legal}</td>
+                                    <td className="p-2 border border-slate-800 w-[25%] text-left">{datos[0].aviso_legal}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -223,7 +199,7 @@ async function page({ params }) {
                             bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs m-2">Añadir</button>
                     </div>
 
-                    {opiniones[0].lista_opiniones.map(opi => {
+                    {opiniones.map(opi => {
                         return (
                             <div className="m-3 p-3 shadow-2xl rounded-xl bg-slate-100" key={opi.id_opi}>
                                 <h1 className="text-black"><strong>{opi.fecha} </strong> Publicado por <strong>{opi.autor}</strong></h1>

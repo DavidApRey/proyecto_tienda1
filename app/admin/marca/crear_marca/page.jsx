@@ -59,7 +59,7 @@ function Page() {
         <div className='flex justify-center bg-white w-[50%]'>
             <div>
                 <div className='max-w-sm mx-auto space-y-6'>
-                    <h2 className="text-2xl font-bold text-black">Crear Almacenamiento</h2>
+                    <h2 className="text-2xl font-bold text-black">Crear Marca</h2>
                     <hr className="my-6" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Marca</label>

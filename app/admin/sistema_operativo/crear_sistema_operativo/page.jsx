@@ -41,19 +41,17 @@ function Page() {
 
     const crear_enviar = () => {
         let select_marca = document.getElementById('select_marca');
-        let capacidad = document.getElementById('capacidad');
-        let velocidad = document.getElementById('velocidad');
-        let socket = document.getElementById('socket');
         let estado = document.getElementById('estado');
+        let version_so = document.getElementById('version_so');
+        let sistema_operativo = document.getElementById('sistema_operativo');
 
-        fetch(`https://backendtienda1311.000webhostapp.com/memoria_ramCRUD.php`, {
+        fetch(`https://backendtienda1311.000webhostapp.com/soCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {
                     id_marca: select_marca.value,
-                    capacidad: capacidad.value,
-                    velocidad: velocidad.value,
-                    socket: socket.value,
+                    version_so: version_so.value,
+                    sistema_operativo: sistema_operativo.value,
                     estado: estado.value
                 }
             ),
@@ -68,12 +66,12 @@ function Page() {
                 if (responseData == "200") {
                     Toast.fire({
                         icon: "success",
-                        title: "Memoria Ram creado con exito"
+                        title: "Sistema Operativo creado con exito"
                     });
                 } else {
                     Toast.fire({
                         icon: "error",
-                        title: "Error en la creacion de Memoria Ram"
+                        title: "Error en la creacion de Sistema Operativo"
                     });
                 }
             })
@@ -86,21 +84,18 @@ function Page() {
         <div className='flex justify-center bg-white w-[50%]'>
             <div>
                 <div className='max-w-sm mx-auto space-y-6'>
-                    <h2 className="text-2xl font-bold text-black">Crear Memoria Ram</h2>
+                    <h2 className="text-2xl font-bold text-black">Crear Sistema Operativo</h2>
                     <hr className="my-6" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Marca</label>
                     <select id='select_marca' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
                     </select>
 
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Capacidad</label>
-                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Velocidad SO</label>
+                    <input type="text" id='version_so' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Velocidad</label>
-                    <input type="text" id='velocidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
-
-                    <label className="uppercase text-sm font-bold opacity-70 text-black">Socket</label>
-                    <input type="text" id='socket' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Sistema Operativo</label>
+                    <input type="text" id='sistema_operativo' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Estado</label>
                     <select id='estado' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">
@@ -109,7 +104,7 @@ function Page() {
                         <option value="N">Inactivo</option>
                     </select>
 
-                    <Link href="../../../admin/memoria_ram" onClick={async () => await crear_enviar()} className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300">Añadir</Link>
+                    <Link href="../../../admin/sistema_operativo" onClick={async () => await crear_enviar()} className="py-3 px-6 my-2 bg-emerald-500 text-white font-medium rounded hover:bg-indigo-500 cursor-pointer ease-in-out duration-300">Añadir</Link>
                 </div>
             </div>
         </div>
