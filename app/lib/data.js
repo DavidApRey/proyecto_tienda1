@@ -90,7 +90,7 @@ export async function fetch_lista_so_especi(id) {
 }
 
 export async function fetch_valid_user(email) {
-    const data = await fetch(`http://localhost/backendTienda/validUsuarios.php?datos_especi=all&email=${email}`)
+    const data = await fetch(`https://backendtienda1311.000webhostapp.com/validUsuarios.php?datos_especi=all&email=${email}`)
         .then(res => res.json());
 
     return data;
