@@ -9,7 +9,7 @@ export async function fetch_producto_by_id(id) {
     const data = await fetch(`https://backendtienda1311.000webhostapp.com/listaProductosCRUD.php?datos_especi=all&id_producto=${id}`)
         .then(res => res.json());
 
-        return data;
+    return data;
 }
 
 export async function fetch_opiniones_by_id(id) {
@@ -84,6 +84,13 @@ export async function fetch_lista_so() {
 
 export async function fetch_lista_so_especi(id) {
     const data = await fetch(`https://backendtienda1311.000webhostapp.com/soCRUD.php?datos_especi=all&id_so=${id}`)
+        .then(res => res.json());
+
+    return data;
+}
+
+export async function fetch_valid_user(email) {
+    const data = await fetch(`http://localhost/backendTienda/validUsuarios.php?datos_especi=all&email=${email}`)
         .then(res => res.json());
 
     return data;
