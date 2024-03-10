@@ -22,7 +22,7 @@ El Sistema va a iniciar con la pantalla blanca en la derecha y en la izquierda s
 
 El sistema tambien va a estar montado en vercel con el siguiente link:
 
-[proyectotienda-ten.vercel.app](proyectotienda-ten.vercel.app)
+[https://proyecto-tienda1.vercel.app/](https://proyecto-tienda1.vercel.app/)
 
 ## Usuarios para pruebas
 
