@@ -43,7 +43,7 @@ function Page() {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                fetch(`https://backendtienda1311.000webhostapp.com/soCRUD.php`, {
+                fetch(`http://tiendatecnolo.softdevdsrp.com.co/soCRUD.php`, {
                     method: 'DELETE',
                     body: JSON.stringify({ id_cons: id }),
                     Headers: {

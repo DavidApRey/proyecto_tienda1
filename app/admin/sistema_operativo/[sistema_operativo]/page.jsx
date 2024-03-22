@@ -103,7 +103,7 @@ function Page({ params }) {
             estado: estado_edit.value
         }
 
-        fetch(`https://backendtienda1311.000webhostapp.com/soCRUD.php`, {
+        fetch(`http://tiendatecnolo.softdevdsrp.com.co/soCRUD.php`, {
             method: 'PUT',
             body: JSON.stringify(postData),
             Headers: {

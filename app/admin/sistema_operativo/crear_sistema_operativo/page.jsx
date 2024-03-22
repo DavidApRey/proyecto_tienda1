@@ -45,7 +45,7 @@ function Page() {
         let version_so = document.getElementById('version_so');
         let sistema_operativo = document.getElementById('sistema_operativo');
 
-        fetch(`https://backendtienda1311.000webhostapp.com/soCRUD.php`, {
+        fetch(`http://tiendatecnolo.softdevdsrp.com.co/soCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {

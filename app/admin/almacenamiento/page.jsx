@@ -43,7 +43,7 @@ function Page() {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                fetch(`http://localhost/backendtienda/almaCRUD.php`, {
+                fetch(`http://tiendatecnolo.softdevdsrp.com.co/almaCRUD.php`, {
                     method: 'DELETE',
                     body: JSON.stringify({ id_cons: id }),
                     Headers: {

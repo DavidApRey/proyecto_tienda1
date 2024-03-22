@@ -80,11 +80,35 @@ function Page() {
     }
 
     return (
-        <div className='flex justify-center bg-white w-[50%]'>
+        <div className='flex justify-center bg-white w-[100%]'>
             <div>
-                <div className='max-w-sm mx-auto space-y-6'>
-                    <h2 className="text-2xl font-bold text-black">Crear Almacenamiento</h2>
+                <div className='max-w-lg mx-auto space-y-6'>
+                    <h2 className="text-2xl font-bold text-black">Crear Equipo de Computo</h2>
                     <hr className="my-6" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Id Articulo</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Nombre Producto</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Sinopsis</label>
+                    <textarea className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black"></textarea>
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Precio</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Color</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Modelo</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">Garantia</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
+
+                    <label className="uppercase text-sm font-bold opacity-70 text-black">aviso_legal</label>
+                    <input type="text" id='capacidad' className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded text-black" />
 
                     <label className="uppercase text-sm font-bold opacity-70 text-black">Marca</label>
                     <select id='select_marca' className="w-full text-black p-3 mt-2 mb-4 bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none">

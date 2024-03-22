@@ -46,7 +46,7 @@ function Page() {
         let socket = document.getElementById('socket');
         let estado = document.getElementById('estado');
 
-        fetch(`https://backendtienda1311.000webhostapp.com/memoria_ramCRUD.php`, {
+        fetch(`http://tiendatecnolo.softdevdsrp.com.co/memoria_ramCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {

@@ -46,7 +46,7 @@ function Page() {
         let velocidad = document.getElementById('velocidad');
         let num_nucleos = document.getElementById('num_nucleos');
 
-        fetch(`https://backendtienda1311.000webhostapp.com/procesadorCRUD.php`, {
+        fetch(`http://tiendatecnolo.softdevdsrp.com.co/procesadorCRUD.php`, {
             method: 'POST',
             body: JSON.stringify(
                 {

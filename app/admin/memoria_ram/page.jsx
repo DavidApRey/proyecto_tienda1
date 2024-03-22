@@ -43,7 +43,7 @@ function Page() {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                fetch(`https://backendtienda1311.000webhostapp.com/memoria_ramCRUD.php`, {
+                fetch(`http://tiendatecnolo.softdevdsrp.com.co/memoria_ramCRUD.php`, {
                     method: 'DELETE',
                     body: JSON.stringify({ id_cons: id }),
                     Headers: {
